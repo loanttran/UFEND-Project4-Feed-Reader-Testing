@@ -54,7 +54,7 @@ $(function() {
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
-        it("element is hidden by default", function() {
+        it("is hidden by default", function() {
             const body = document.querySelector("body"); 
             expect(body.classList.contains("menu-hidden")).toBe(true); 
         }); 
@@ -64,9 +64,16 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-         it("displays when clicked and hides when clicked again", function() {
+        it("displays when clicked and hides when clicked again", function() {
+            const body = document.querySelector("body"); 
+            const menuIcon = document.querySelector(".menu-icon-link"); 
 
-         }); 
+            menuIcon.click(); 
+            expect(body.classList.contains("menu-hidden")).toBe(false);
+
+            menuIcon.click(); 
+            expect(body.classList.contains("menu-hidden")).toBe(true);
+        }); 
     }); 
 
 
