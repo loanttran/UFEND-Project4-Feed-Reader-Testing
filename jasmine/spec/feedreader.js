@@ -102,5 +102,27 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-    })
+        const feed = document.querySelector(".feed");     
+        const firstFeed = [];    
+        const secondFeed = []; 
+
+        beforeEach(function(done) {
+            loadFeed(0);
+            for (var i=0; i<feed.children.length; i++) {
+                firstFeed.push(feed.children[i].innerText);
+            }
+            // console.log(firstFeed);
+            loadFeed(1, done); 
+        });
+
+        it("actually changes content", function() {
+            for (var i=0; i<feed.children.length; i++) {
+                secondFeed.push(feed.children[i].innerText);
+                // console.log(secondFeed[i] === firstFeed[i]);
+            }
+            // console.log(secondFeed);
+            // check if the two feeds are different
+            expect(secondFeed).not.toEqual(firstFeed);
+        })
+    }); 
 }());
