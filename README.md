@@ -3,7 +3,7 @@
 ## Project Overview 
 <p>Given a web-based application that reads RSS feeds, write a number of <a href="https://jasmine.github.io/">Jasmine</a> tests to test the application. These will test the underlying business logic of the application as well as the event handling and DOM manipulation.</p>
 
-<p>Click on <em>index.html</em> to see the app. All the written tests are in <em>/jasmine/spec/feedreader.js</em></p>
+<p>Click on <strong>index.html</strong> to see the app. All the written tests are in <strong>/jasmine/spec/feedreader.js</strong></p>
 
 ## The Importance of Testing
 <p>Testing is an important part of the development process and many organizations practice a standard of development known as "test-driven development." This is when developers write tests first, before they ever start developing their application. All the tests initially fail and then they start writing application code to make these tests pass.</p>
