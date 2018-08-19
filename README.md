@@ -31,3 +31,5 @@
 - Ensure when a new feed is loaded by the `loadFeed` function that the content actually changes.
 - No test should be dependent on the results of another. 
 - Callbacks should be used to ensure that feeds are loaded before they are tested.
+
+<img src="https://github.com/loanttran/UFEND-Project4-Feed-Reader-Testing/blob/master/images/1.png">
