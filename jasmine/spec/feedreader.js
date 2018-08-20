@@ -12,11 +12,11 @@ $(function() {
     /* This suite is all about the RSS
     * feeds definitions, the allFeeds variable in our application.
     */
-    describe('RSS Feeds', function() {
+    describe('RSS Feeds', () => {
         /* makes sure that the allFeeds variable has been 
          * defined and that it is not empty.
          */
-        it('are defined', function() {
+        it('are defined', () => {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
@@ -25,8 +25,8 @@ $(function() {
          * and ensures it has a URL defined
          * and that the URL is not empty.
          */
-        it("have URLs defined, and the URLs are not empty", function() {
-            allFeeds.forEach(function(feed) {
+        it("have URLs defined, and the URLs are not empty", () => {
+            allFeeds.forEach((feed) => {
                 expect(feed.url).toBeDefined(); 
                 expect(feed.url.length).not.toBe(0); 
             }); 
@@ -36,8 +36,8 @@ $(function() {
          * and ensures it has a name defined
          * and that the name is not empty.
          */
-        it("have names defined, and the names are not empty", function() {
-            allFeeds.forEach(function(feed) {
+        it("have names defined, and the names are not empty", () => {
+            allFeeds.forEach((feed) => {
                 expect(feed.name).toBeDefined();
                 expect(feed.name.length).not.toBe(0); 
             });
@@ -45,72 +45,79 @@ $(function() {
     });
 
 
-    describe("The menu", function() {
+    describe("The menu", () => {
         /* ensures the menu element is hidden by default. */
-        it("is hidden by default", function() {
-            const body = document.querySelector("body"); 
-            expect(body.classList.contains("menu-hidden")).toBe(true); 
+        it("is hidden by default", () => { 
+            expect($('body').hasClass("menu-hidden")).toBe(true); 
         }); 
 
          /* ensures the menu changes visibility when the menu icon is clicked. 
           * This test have two expectations: the menu displays when
           * clicked and it hide when clicked again.
           */
-        it("displays when clicked and hides when clicked again", function() {
-            const body = document.querySelector("body"); 
-            const menuIcon = document.querySelector(".menu-icon-link"); 
+        it("displays when clicked and hides when clicked again", () => {
+            $('.menu-icon-link').click(); 
+            expect($('.menu-icon-link').hasClass("menu-hidden")).toBe(false);
 
-            menuIcon.click(); 
-            expect(body.classList.contains("menu-hidden")).toBe(false);
-
-            menuIcon.click(); 
-            expect(body.classList.contains("menu-hidden")).toBe(true);
+            $('.menu-icon-link').click(); 
+            expect($('body').hasClass("menu-hidden")).toBe(true);
         }); 
     }); 
 
 
-    describe("Initial Entries", function() {
+    describe("Initial Entries", () => {
         /* ensures when the loadFeed function is called and completes its work, 
          * there is at least a single .entry element within the .feed container.
          * loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-        beforeEach(function(done) {
-            loadFeed(0, done);
+        beforeEach((done) => {
+            loadFeed(0, () => {
+                done();
+            }); 
         });
 
-        it("are loaded", function() {
-            const feed = document.querySelector(".feed"); 
-            expect(feed.children.length > 0).toBe(true); 
+        it("are loaded", () => {
+            let entries = $('.feed .entry'); // select entry as child element of feed
+            expect(Array.from(entries).length > 0).toBe(true); 
         });
     });
-    
 
-    describe("New Feed Selection", function() {
+
+    describe("New Feed Selection", () => {
         /* ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
-         */
-        const feed = document.querySelector(".feed");     
-        const firstFeed = [];    
-        const secondFeed = []; 
+         */     
+        let firstFeed,    
+            secondFeed;  
 
-        beforeEach(function(done) {
-            loadFeed(0);
-            for (var i=0; i<feed.children.length; i++) {
-                firstFeed.push(feed.children[i].innerText);
-            }
-            // console.log(firstFeed);
-            loadFeed(1, done); 
-        });
+        // Check if there are at least 2 feeds to load
+        it('has at least two feeds to load', () => {
+            expect(allFeeds.length > 1).toBe(true); 
+        }); 
 
-        it("actually changes content", function() {
-            for (var i=0; i<feed.children.length; i++) {
-                secondFeed.push(feed.children[i].innerText);
-                // console.log(secondFeed[i] === firstFeed[i]);
-            }
-            // console.log(secondFeed);
-            // check if the two feeds are different
-            expect(secondFeed).not.toEqual(firstFeed);
+        describe("loads another feed", () => {
+            beforeEach((done) => {
+                /* Load second feed of allFeeds array with a callback which will
+                * reload the first feed of the array
+                */
+                loadFeed(1, () => {
+                // Wait till it's done and store the loaded feed for future testing
+                firstFeed = $('.feed').html(); 
+                    loadFeed(0, () => {
+                        secondFeed = $('.feed').html(); 
+                        done();
+                    });
+                }); 
+            });
+            
+            it("actually changes content", function() {
+                // check if the content of the two feeds are different
+                // console.log(firstFeed); 
+                // console.log(secondFeed);
+                // console.log(firstFeed === secondFeed); 
+                expect(secondFeed).not.toEqual(firstFeed);
+            })
         })
     }); 
 }());
