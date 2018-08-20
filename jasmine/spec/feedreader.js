@@ -98,26 +98,21 @@ $(function() {
 
         describe("loads another feed", () => {
             beforeEach((done) => {
-                /* Load second feed of allFeeds array with a callback which will
-                * reload the first feed of the array
-                */
-                loadFeed(1, () => {
-                // Wait till it's done and store the loaded feed for future testing
-                firstFeed = $('.feed').html(); 
-                    loadFeed(0, () => {
-                        secondFeed = $('.feed').html(); 
-                        done();
+                loadFeed(0, () => {
+                    firstFeed = $('.feed').html(); 
+
+                    loadFeed(1, () => {
+                        done(); 
                     });
                 }); 
             });
             
-            it("actually changes content", function() {
+            it("actually changes content", ((done) => {
                 // check if the content of the two feeds are different
-                // console.log(firstFeed); 
-                // console.log(secondFeed);
-                // console.log(firstFeed === secondFeed); 
+                secondFeed = $('.feed').html(); 
                 expect(secondFeed).not.toEqual(firstFeed);
-            })
-        })
+                done();
+            }));
+        }); 
     }); 
 }());
