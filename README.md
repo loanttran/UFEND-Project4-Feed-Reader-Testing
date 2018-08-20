@@ -3,7 +3,7 @@
 ## Project Overview 
 <p>Given a web-based application that reads RSS feeds, write a number of <a href="https://jasmine.github.io/">Jasmine</a> tests to test the application. These will test the underlying business logic of the application as well as the event handling and DOM manipulation.</p>
 
-<p>Clone the repo `git clone https://github.com/loanttran/UFEND-Project4-Feed-Reader-Testing.git` and click on <strong>index.html</strong> to run the app. All the written tests are in <strong>/jasmine/spec/feedreader.js</strong></p>
+<p>Clone the repo ```git clone https://github.com/loanttran/UFEND-Project4-Feed-Reader-Testing.git``` and click on <strong>index.html</strong> to run the app. All the written tests are in <strong>/jasmine/spec/feedreader.js</strong></p>
 
 <p align="center">
   <img src="https://github.com/loanttran/UFEND-Project4-Feed-Reader-Testing/blob/master/images/1.png" width=70%>
